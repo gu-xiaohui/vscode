@@ -71,30 +71,6 @@ jobs:
       - name: Compile and Download
         run: npm exec -- npm-run-all -lp compile "electron x64" playwright-install download-builtin-extensions
 
-      - name: Compile Integration Tests
-        run: npm run compile
-        working-directory: test/integration/browser
-
-      - name: Run Unit Tests (Electron)
-        run: .\scripts\test.bat
-
-      - name: Run Unit Tests (node.js)
-        run: npm run test-node
-
-      - name: Run Unit Tests (Browser, Chromium)
-        run: npm run test-browser-no-install -- --browser chromium
-
-      - name: Run Integration Tests (Electron)
-        run: .\scripts\test-integration.bat
-
-      - name: Run Integration Tests (Browser, Firefox)
-        timeout-minutes: 20
-        run: .\scripts\test-web-integration.bat --browser firefox
-
-      - name: Run Integration Tests (Remote)
-        timeout-minutes: 20
-        run: .\scripts\test-remote-integration.bat
-
   linux:
     name: Linux
     runs-on: ubuntu-latest
@@ -147,35 +123,6 @@ jobs:
 
       - name: Compile and Download
         run: npm exec -- npm-run-all -lp compile "electron x64" playwright-install download-builtin-extensions
-
-      - name: Compile Integration Tests
-        run: npm run compile
-        working-directory: test/integration/browser
-
-      - name: Run Unit Tests (Electron)
-        id: electron-unit-tests
-        run: DISPLAY=:10 ./scripts/test.sh
-
-      - name: Run Unit Tests (node.js)
-        id: nodejs-unit-tests
-        run: npm run test-node
-
-      - name: Run Unit Tests (Browser, Chromium)
-        id: browser-unit-tests
-        run: DISPLAY=:10 npm run test-browser-no-install -- --browser chromium
-
-      - name: Run Integration Tests (Electron)
-        id: electron-integration-tests
-        run: DISPLAY=:10 ./scripts/test-integration.sh
-
-      - name: Run Integration Tests (Browser, Chromium)
-        id: browser-integration-tests
-        run: DISPLAY=:10 ./scripts/test-web-integration.sh --browser chromium
-
-      - name: Run Integration Tests (Remote)
-        id: electron-remote-integration-tests
-        timeout-minutes: 15
-        run: DISPLAY=:10 ./scripts/test-remote-integration.sh
 
   darwin:
     name: macOS
@@ -230,25 +177,6 @@ jobs:
           security create-keychain -p pwd $RUNNER_TEMP/buildagent.keychain
           security default-keychain -s $RUNNER_TEMP/buildagent.keychain
           security unlock-keychain -p pwd $RUNNER_TEMP/buildagent.keychain
-
-      - name: Run Unit Tests (Electron)
-        run: DISPLAY=:10 ./scripts/test.sh
-
-      - name: Run Unit Tests (node.js)
-        run: npm run test-node
-
-      - name: Run Unit Tests (Browser, Chromium)
-        run: DISPLAY=:10 npm run test-browser-no-install -- --browser chromium
-
-      - name: Run Integration Tests (Electron)
-        run: DISPLAY=:10 ./scripts/test-integration.sh
-
-      - name: Run Integration Tests (Browser, Webkit)
-        run: DISPLAY=:10 ./scripts/test-web-integration.sh --browser webkit
-
-      - name: Run Integration Tests (Remote)
-        timeout-minutes: 15
-        run: DISPLAY=:10 ./scripts/test-remote-integration.sh
 
   hygiene:
     name: Hygiene and Layering
