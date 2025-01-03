@@ -149,6 +149,11 @@ export class SidebarPart extends AbstractPaneCompositePart {
 		container.style.borderLeftStyle = borderColor && !isPositionLeft ? 'solid' : '';
 		container.style.borderLeftColor = !isPositionLeft ? borderColor || '' : '';
 		container.style.outlineColor = this.getColor(SIDE_BAR_DRAG_AND_DROP_BACKGROUND) ?? '';
+		container.style.borderRadius = '8px';
+		container.style.margin = '6px';
+		container.style.border = 'none';
+		// container.style.padding = '4px';
+		container.style.height = 'calc( 100% - 12px )';
 	}
 
 	override layout(width: number, height: number, top: number, left: number): void {
